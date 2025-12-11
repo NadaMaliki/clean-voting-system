@@ -8,9 +8,10 @@ import java.util.List;
 
 public class JdbcVoteRepository implements VoteRepository {
 
-    private final String url = "jdbc:h2:./votesdb"; // fichier local votesdb.mv.db
-    private final String user = "sa";
-    private final String password = "";
+    private static final String url = "jdbc:h2:./votesdb"; // fichier local votesdb.mv.db
+    private static final String user = "sa";
+    private static final String password = "";
+
 
     public JdbcVoteRepository() {
         try (Connection conn = getConnection();

@@ -6,11 +6,15 @@ import com.example.vote.observer.LoggingVoteListener;
 import com.example.vote.repo.VoteRepository;
 import com.example.vote.service.VoteService;
 import com.example.vote.strategy.PluralityCountingStrategy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Scanner;
 
 public class App {
+
+    private static final Logger logger = LoggerFactory.getLogger(App.class);
 
     public static void main(String[] args) {
 
@@ -20,11 +24,11 @@ public class App {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Welcome to Clean VotingApp!");
-        System.out.println("Commands: vote, count, reset, exit");
+        logger.info("Welcome to Clean VotingApp!");
+        logger.info("Commands: vote, count, reset, exit");
 
         while (true) {
-            System.out.print("> ");
+            System.out.print("> "); // prompt stays on console
             String cmd = sc.nextLine();
 
             switch (cmd) {
@@ -38,23 +42,23 @@ public class App {
                 case "count" -> {
                     Map<String, Integer> results =
                             service.count(new PluralityCountingStrategy());
-                    System.out.println("Results: " + results);
+                    logger.info("Results: {}", results);
                 }
                 case "reset" -> {
                     service.reset();
-                    System.out.println("Reset done!");
+                    logger.info("Reset done!");
                 }
                 case "exit" -> {
-                    System.out.println("Bye!");
+                    logger.info("Bye!");
                     return;
                 }
                 case "stats" -> {
                     var history = service.getHistory();
                     var count = service.count(new PluralityCountingStrategy());
-                    System.out.println("Total votes: " + history.size());
-                    System.out.println("Top candidates: " + count);
+                    logger.info("Total votes: {}", history.size());
+                    logger.info("Top candidates: {}", count);
                 }
-                default -> System.out.println("Unknown command");
+                default -> logger.warn("Unknown command");
             }
         }
     }

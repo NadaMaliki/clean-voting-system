@@ -4,6 +4,9 @@ import com.example.vote.repo.*;
 
 public class RepositoryFactory {
 
+    private RepositoryFactory() {
+    }
+
     public static VoteRepository createRepository(String type) {
         if ("memory".equalsIgnoreCase(type)) {
             return new InMemoryVoteRepository();
