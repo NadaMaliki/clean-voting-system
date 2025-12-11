@@ -14,6 +14,8 @@ class JdbcVoteRepositoryTest {
 
     @BeforeEach
     void setup() {
+        System.setProperty("h2.url", "jdbc:h2:./test_votesdb");
+
         repo = new JdbcVoteRepository();
         repo.clear();
     }
@@ -41,10 +43,9 @@ class JdbcVoteRepositoryTest {
     @Test
     void testDuplicateVote() {
         repo.save(new Vote("v1", "Alice", 1L));
-        repo.save(new Vote("v1", "Bob", 2L)); // MERGE INTO devrait remplacer Alice par Bob
+        repo.save(new Vote("v1", "Bob", 2L));  // MERGE doit remplacer
         List<Vote> votes = repo.findAll();
         assertEquals(1, votes.size());
         assertEquals("Bob", votes.get(0).getCandidateId());
     }
 }
-

@@ -28,7 +28,7 @@ public class App {
         logger.info("Commands: vote, count, reset, exit");
 
         while (true) {
-            System.out.print("> "); // prompt stays on console
+            logger.info("\n> ");
             String cmd = sc.nextLine();
 
             switch (cmd) {
