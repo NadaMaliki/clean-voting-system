@@ -22,5 +22,11 @@ public class InMemoryVoteRepository implements VoteRepository {
     public void clear() {
         store.clear();
     }
+
+    @Override
+    public void removeVotesFor(String candidateId) {
+        store.removeIf(v -> v.getCandidateId().equals(candidateId));
+    }
+
 }
 

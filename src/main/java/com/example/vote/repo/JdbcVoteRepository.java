@@ -75,4 +75,17 @@ public class JdbcVoteRepository implements VoteRepository {
             throw new RuntimeException("Failed to clear votes", e);
         }
     }
+
+    @Override
+    public void removeVotesFor(String candidateId) {
+        String sql = "DELETE FROM votes WHERE candidate_id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, candidateId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to remove votes for candidate: " + candidateId, e);
+        }
+    }
+
 }

@@ -47,7 +47,7 @@ public class VoteService {
 
     public void removeCandidate(String candidate) {
         candidates.remove(candidate);
-        repo.findAll().removeIf(v -> v.getCandidateId().equals(candidate));
+        repo.removeVotesFor(candidate);
     }
 
     public List<Vote> getHistory() {
